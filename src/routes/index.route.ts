@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { Photo } from '../models/photo.model';
 import multer from 'multer';
+import { saveInDB } from '../models/photo.model'
 
 const router = Router();
 
@@ -31,10 +32,8 @@ router.post(
     ,
     async (req, res, next) => {
         try {
-
-            /** @TODO Save Photo in database */
+            await saveInDB("/"+req.file?.filename , req.body.title)
             res.redirect('/');
-
         } catch (err) {
             console.error(err);
             next(err)
