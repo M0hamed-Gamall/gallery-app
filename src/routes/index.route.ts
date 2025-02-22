@@ -18,7 +18,17 @@ router.get('/', async (req, res, next) => {
 
 router.post(
     '/',
-    /** @TODO Add multer middleware */
+    multer({
+        storage: multer.diskStorage({
+            destination: (req , file , cb)=>{
+                cb(null , 'images')
+            },
+            filename: (req , file , cb)=>{
+                cb(null , Date.now() + '_' + file.originalname)
+            }
+        })
+    }).single('file')
+    ,
     async (req, res, next) => {
         try {
 
